@@ -4,11 +4,13 @@ class EmojisymblewithInfo:
     '''
     def __init__(self,infoEmoji,infoUniCode=None,
                     info中文名=None,info英文描述=None,info输入串=None,
-                    info标签=None,info别名=None,info附加信息=None):
+                    info标签=None,info别名=None,info附加信息=None,
+                    info英文输入串=None):
         self.infoEmoji=infoEmoji
         self.infoUniCode=infoUniCode
         self.info中文名=info中文名
         self.info英文描述=info英文描述
+        self.info英文输入串=info英文输入串
         self.info输入串=info输入串
         self.info标签=info标签
         self.info别名=info别名
@@ -24,7 +26,7 @@ class EmojisymblewithInfo:
     
 
 if __name__=="__main__":
-    emojixiaolian=EmojisymblewithInfo('🌹')
+    emojixiaolian=EmojisymblewithInfo('⭐')
     print(emojixiaolian)
     print(emojixiaolian.info英文描述)
     print('end')
