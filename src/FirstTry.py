@@ -1,71 +1,41 @@
-#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
+import models
+import pickle
+
+emojidict=[]
 
 
-"""
-Extract the full list of emoji and names from the Unicode Consortium and
-apply as much formatting as possible so the codes can be dropped into the
-emoji registry file.
+try:
+    savefile=open('mylist.pkl','rb')
+    emojidict=pickle.load(savefile)
+    savefile.close()
+except IOError:
+    print("File is not accessible.") 
 
-Written and run with Python3.  Not tested on Python2 and definitely not
-intended for production use.
+aaa=models.EmojisymblewithInfo('⭐',info中文名='星星',info输入串='xingxing',symbleunicode= u'\U0001F947')
+if aaa.symblechar not in [x.symblechar for x in emojidict]:
+    emojidict.append(aaa)
 
-http://www.unicode.org/Public/emoji/1.0/full-emoji-list.html
-"""
+bbb=models.EmojisymblewithInfo('🌹',info中文名='玫瑰',info输入串='meigui',symbleunicode=u'\U0001F170')
+if bbb.symblechar not in [x.symblechar for x in emojidict]:
+    emojidict.append(bbb)
 
+for symble in emojidict:
+    print(symble)
 
-import requests
-from bs4 import BeautifulSoup
-from collections import OrderedDict
+savefile=open('mylist.pkl','wb')
+pickle.dump(emojidict,savefile)
+savefile.close()
 
+_DEFAULT_POSITION = 3
+def savetoSougou(filename,EmojiDict,Default_Position=3):
+    try:
+        filename=open(filename,'w',encoding='utf-8')
+        for symble in EmojiDict:
+            filename.write(symble.info输入串+','+repr(Default_Position)+'='+symble.symblechar+"\n")
+        filename.close()
+    except IOError:
+        print("导出到 %S 时出错",filename)
 
-url = 'http://www.unicode.org/emoji/charts/emoji-list.html'
-
-
-response = requests.get(url)
-response.raise_for_status()
-soup = BeautifulSoup(response.text, "html.parser")
-
-# with open('utils/content.html') as f:
-#     soup = BeautifulSoup(f.read())
-
-header = [
-    'Count', 'Code', 'Sample', 'Name'
-]
-
-output = {}
-for row in soup.find('table').find_all('tr'):
-    cols = row.find_all('td')
-    cols = [e.text.strip() for e in cols]
-    d = OrderedDict(zip(header, [e.strip() for e in cols]))
-    if d:
-        _code = []
-        for c in d['Code'].split(' '):
-            if len(c) is 6:
-                _code.append(c.replace('+', '0000'))
-            else:
-                _code.append(c.replace('+', '000'))
-        code = ''.join(_code)
-
-        """
-            replace semi-colons, commas,
-            open smart quote, close smart quote,
-            and asterisk (⊛) symbol used to
-            denote newly added emojis
-
-            replace spaces after trimming for the
-            asterisk case
-        """
-
-        name = d['Name'].replace(':', '') \
-                        .replace(',', '') \
-                        .replace(u'\u201c', '') \
-                        .replace(u'\u201d', '') \
-                        .replace(u'\u229b', '')\
-                        .strip()\
-                        .replace(' ', '_')
-
-        char = "u'" + code.replace('U', '\\U') + "',"
-        output[name] = char
-
-for name in sorted(output.keys()):
-    print("    u':%s:': %s" % (name, output[name]))
+savetoSougou('sougou.txt',emojidict,_DEFAULT_POSITION)
