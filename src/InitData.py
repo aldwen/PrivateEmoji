@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 import json
 import models
 
@@ -7,7 +8,8 @@ def InitFromXXLEmoji(filename):
 
     ListofSymble=[]
     for item in load_dict:
-        symble=models.EmojisymblewithInfo(item['unicode'],
+        
+        symble=models.EmojiInfo(item['unicode'],
             info英文描述=",".join(item['aliases']),
             info标签=','.join(item['tags']),
             )
@@ -21,5 +23,5 @@ if __name__=="__main__":
     getlist=InitFromXXLEmoji(filename)
 
     for item in getlist:
-        print(item.infoEmoji)
+        print(item.infoEmoji,end=' ')
 

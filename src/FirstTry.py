@@ -3,39 +3,28 @@
 import models
 import pickle
 
-emojidict=[]
-
-
 try:
-    savefile=open('mylist.pkl','rb')
-    emojidict=pickle.load(savefile)
-    savefile.close()
+    pkl_file=open(r'.\PrivateEmoji\resources\mylist.pkl','rb')
+    a_emojiList=pickle.load(pkl_file)
+    pkl_file.close()
+    print('Load data form PKL file')
 except IOError:
-    print("File is not accessible.") 
+    a_emojiList=models.EmojiInfoList()
+    a_emojiList.LoadformXXL(r".\PrivateEmoji\resources\xxl-emoji.json")
+    print("Load data from JSON file") 
 
-aaa=models.EmojisymblewithInfo('⭐',info中文名='星星',info输入串='xingxing',symbleunicode= u'\U0001F947')
-if aaa.symblechar not in [x.symblechar for x in emojidict]:
-    emojidict.append(aaa)
 
-bbb=models.EmojisymblewithInfo('🌹',info中文名='玫瑰',info输入串='meigui',symbleunicode=u'\U0001F170')
-if bbb.symblechar not in [x.symblechar for x in emojidict]:
-    emojidict.append(bbb)
+aaa=models.EmojiInfo('⭐',info中文名='星星',info输入串='xingxing')
+a_emojiList.addsymble(aaa)
 
-for symble in emojidict:
-    print(symble)
+bbb=models.EmojiInfo('🌹',info中文名='玫瑰',info输入串='meigui')
+a_emojiList.addsymble(bbb)
 
-savefile=open('mylist.pkl','wb')
-pickle.dump(emojidict,savefile)
-savefile.close()
+for symble in a_emojiList.list:
+    print(symble,end=' ')
 
-_DEFAULT_POSITION = 3
-def savetoSougou(filename,EmojiDict,Default_Position=3):
-    try:
-        filename=open(filename,'w',encoding='utf-8')
-        for symble in EmojiDict:
-            filename.write(symble.info输入串+','+repr(Default_Position)+'='+symble.symblechar+"\n")
-        filename.close()
-    except IOError:
-        print("导出到 %S 时出错",filename)
+pkl_file=open(r'.\PrivateEmoji\resources\mylist.pkl','wb')
+pickle.dump(a_emojiList,pkl_file)
+pkl_file.close()
 
-savetoSougou('sougou.txt',emojidict,_DEFAULT_POSITION)
+models.savetoSougou(r'.\PrivateEmoji\resources\sougou.txt',a_emojiList.list)
