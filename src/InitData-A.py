@@ -1,25 +1,25 @@
 import json
 import models
-import os
-path = os.getcwd()#获取当前路径
- 
-with open(path+r"\PrivateEmoji\resources\xxl-emoji.json",encoding='utf-8') as load_f:
-    load_dict = json.load(load_f)
 
-ListofSymble=[]
-ListofSymble2=[]
+def InitFromXXLEmoji(filename):
+    with open(filename,encoding='utf-8') as load_f:
+        load_dict = json.load(load_f)
 
-for item in load_dict:
-    ListofSymble2.append{'infoEmoji':item['unicode']}
-
-    symble=models.EmojisymblewithInfo(item['unicode'],
+    ListofSymble=[]
+    for item in load_dict:
+        symble=models.EmojisymblewithInfo(item['unicode'],
             info英文描述=",".join(item['aliases']),
             info标签=','.join(item['tags']),
             )
-    ListofSymble.append(symble)
+        ListofSymble.append(symble)
 
+    return ListofSymble
+    
+if __name__=="__main__":
 
-'''with open(r"./PrivateEmoji/resources/EmojiClass.json","w",encoding='utf-8') as dump_f:
-    json.dump(ListofSymble,dump_f)
-'''
-print('End of Init Data')
+    filename=r"D:\Aldwen\Coding\Python\PrivateEmoji\PrivateEmoji\resources\xxl-emoji.json"
+    getlist=InitFromXXLEmoji(filename)
+
+    for item in getlist:
+        print(item.infoEmoji)
+
