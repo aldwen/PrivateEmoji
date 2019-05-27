@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-import pickle
 import json
 
 class EmojiInfo:
@@ -30,19 +29,17 @@ class EmojiInfo:
     def add中文名(self,data):
         self.info中文名=data
 
-
-_DEFAULT_POSITION = 3
-def savetoSougou(filename,EmojiDict,Default_Position=3):
+def savetoSougou(filename,emlist,Default_Position=3):
     try:
         filename=open(filename,'w',encoding='utf-8')
-        for symble in EmojiDict:
+        for symble in emlist:
             if symble.info输入串!=None:
                 filename.write(symble.info输入串+','+repr(Default_Position)+'='+symble.infoEmoji+"\n")
         filename.close()
     except IOError:
         print("导出到 %S 时出错",filename)
 
-class EmojiInfoList:
+class emlist:
     list=[]
 
     def addsymble(self,symble):
@@ -56,8 +53,8 @@ class EmojiInfoList:
                 if symble.infoEmoji==item.infoEmoji:
                     if symble.infoUniCode!=None: item.infoUniCode=symble.infoUniCode
                     if symble.info输入串!=None: item.info输入串=symble.info输入串
-                    print('这里需要 List 里的其他更新代码') #TODO:如何更新列表的内容？
-
+                    print('这里需要 List 里的其他更新代码')
+                    
     def LoadformXXL(self,filename):
         with open(filename,encoding='utf-8') as load_f:
             load_dict = json.load(load_f)
