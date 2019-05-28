@@ -7,14 +7,24 @@ class EmojiInfo:
     '''
     def getUnicodeformEmoji(self,emojisymble):
         return hex(ord(emojisymble)).upper()
+    
+    def getEmojifromUnicode(self,infoUnicode):
+        return chr(int(infoUnicode,16))
 
     def __init__(self,infoEmoji,infoUniCode=None,
                     info中文名=None,info英文描述=None,info输入串=None,
                     info标签=None,info别名=None,info附加信息=None,
                     info英文输入串=None):
+
         self.infoEmoji=infoEmoji
         if  infoUniCode==None:
-            self.infoUniCode=self.getUnicodeformEmoji(infoEmoji[0])
+            self.infoUniCode=self.getUnicodeformEmoji(infoEmoji)
+        '''
+        初始化时以unicode为准还是 emoji图形为准，这是个问题
+        self.infoUniCode=infoUniCode
+        if  infoEmoji==None:
+            self.infoEmoji=self.getEmojifromUnicode(infoUniCode)
+        '''
         self.info中文名=info中文名
         self.info英文描述=info英文描述
         self.info英文输入串=info英文输入串
@@ -46,15 +56,16 @@ class emlist:
         if self.list==None: 
             raise ImportError #TODO:这里的错误类型需要修改
 
-        if symble.infoEmoji not in [x.infoEmoji for x in self.list]:
-            self.list.append(symble)
+        for item in self.list:
+            if symble.infoEmoji==item.infoEmoji:
+                if symble.infoUniCode!=None: item.infoUniCode=symble.infoUniCode
+                if symble.info输入串!=None: item.info输入串=symble.info输入串
+                print('这里需要 List 里的其他更新代码')
+                break
         else:
-            for item in self.list:
-                if symble.infoEmoji==item.infoEmoji:
-                    if symble.infoUniCode!=None: item.infoUniCode=symble.infoUniCode
-                    if symble.info输入串!=None: item.info输入串=symble.info输入串
-                    print('这里需要 List 里的其他更新代码')
-                    
+            self.list.append(symble)
+
+
     def LoadformXXL(self,filename):
         with open(filename,encoding='utf-8') as load_f:
             load_dict = json.load(load_f)
@@ -66,7 +77,15 @@ class emlist:
                 info标签=','.join(item['tags']),
                 )
             self.list.append(symble)
-
+    
+    def SavetoJson(self,filename):
+        '''
+        emlist 的保存功能，似乎JSON 遇到了无法处理的emoji 函授
+        因此在JSON dump过程中要丢掉 emoji，只保留Unicode信息
+        '''
+        with open(filename, "w", encoding='utf-8') as fw:
+            fw.write(json.dumps(self.list, indent=4,ensure_ascii=False,skipkeys=True))
+        
 
 
 if __name__=="__main__":
