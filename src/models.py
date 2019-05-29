@@ -39,6 +39,12 @@ class EmojiInfo:
     def add中文名(self,data):
         self.info中文名=data
 
+def getdictfromEmoji(emojiinfo):
+    return {'infoEmoji':emojiinfo.infoEmoji,
+            'infoUnicode':emojiinfo.infoUniCode,
+            'info输入串':emojiinfo.info输入串
+    }
+
 def savetoSougou(filename,emlist,Default_Position=3):
     try:
         filename=open(filename,'w',encoding='utf-8')
@@ -55,7 +61,6 @@ class emlist:
     def addsymble(self,symble):
         if self.list==None: 
             raise ImportError #TODO:这里的错误类型需要修改
-
         for item in self.list:
             if symble.infoEmoji==item.infoEmoji:
                 if symble.infoUniCode!=None: item.infoUniCode=symble.infoUniCode
@@ -84,7 +89,7 @@ class emlist:
         因此在JSON dump过程中要丢掉 emoji，只保留Unicode信息
         '''
         with open(filename, "w", encoding='utf-8') as fw:
-            fw.write(json.dumps(self.list, indent=4,ensure_ascii=False,skipkeys=True))
+            fw.write(json.dumps(self.list, indent=4,default=lambda obj: obj.__dict__))
         
 
 
