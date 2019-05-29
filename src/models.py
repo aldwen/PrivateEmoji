@@ -5,8 +5,8 @@ class EmojiInfo:
     '''
     用于存放emoji符号和附属信息的类
     '''
-    def getUnicodeformEmoji(self,emojisymble):
-        return hex(ord(emojisymble)).upper()
+    def getUnicodeformEmoji(self,infoemoji):
+        return hex(ord(infoemoji)).upper()
     
     def getEmojifromUnicode(self,infoUnicode):
         return chr(int(infoUnicode,16))
@@ -18,7 +18,7 @@ class EmojiInfo:
 
         self.infoEmoji=infoEmoji
         if  infoUniCode==None:
-            self.infoUniCode=self.getUnicodeformEmoji(infoEmoji)
+            self.infoUniCode=self.getUnicodeformEmoji(infoEmoji[0])
         '''
         初始化时以unicode为准还是 emoji图形为准，这是个问题
         self.infoUniCode=infoUniCode
@@ -74,20 +74,15 @@ class emlist:
     def LoadformXXL(self,filename):
         with open(filename,encoding='utf-8') as load_f:
             load_dict = json.load(load_f)
-
         self.list=[]
         for item in load_dict:
             symble=EmojiInfo(item['unicode'],
-                info英文描述=",".join(item['aliases']),
-                info标签=','.join(item['tags']),
+                info英文描述=item['aliases'],
+                info标签=item['tags'],
                 )
             self.list.append(symble)
     
     def SavetoJson(self,filename):
-        '''
-        emlist 的保存功能，似乎JSON 遇到了无法处理的emoji 函授
-        因此在JSON dump过程中要丢掉 emoji，只保留Unicode信息
-        '''
         with open(filename, "w", encoding='utf-8') as fw:
             fw.write(json.dumps(self.list, indent=4,default=lambda obj: obj.__dict__))
         
