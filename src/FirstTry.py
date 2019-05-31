@@ -3,14 +3,20 @@
 import models
 import pickle
 
+changepath=2
+if changepath==1:
+    paths=r'..\\'
+elif changepath==2:
+    paths=r'.\\PrivateEmoji\\'
+
 try:
-    pkl_file=open(r'.\PrivateEmoji\temp\mylist.pkl','rb')
+    pkl_file=open(paths+r'temp\mylist.pkl','rb')
     a_emojiList=pickle.load(pkl_file)
     pkl_file.close()
     print('Load data form PKL file')
 except IOError:
     a_emojiList=models.emlist()
-    a_emojiList.LoadformXXL(r".\PrivateEmoji\resources\xxl-emoji.json")
+    a_emojiList.LoadformXXL(paths+r"resources\xxl-emoji.json")
     print("Load data from JSON file") 
 
 
