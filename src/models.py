@@ -56,11 +56,10 @@ class emlist:
     _list=[]
 
     def addsymble(self,symble):
-        if self._list==None: 
-            raise ImportError #TODO:这里的错误类型需要修改
         for item in self._list:
             if symble['unicode']==item['unicode']:
                 item.update(symble)
+                break
         else:
             self._list.append(symble)
 
@@ -90,15 +89,15 @@ if __name__=="__main__":
     
     import models
     a_emojiList=emlist()
-    a_emojiList.LoadformXXL(r"..\resources\xxl-emoji.json")
+    a_emojiList.LoadformXXL(r"..\resources\try.json")
     print("Load data from JSON file") 
 
 
-    aaa={'unicode':'⭐','info中文名':'星星','info输入串':'xingxing'}
-    a_emojiList.addsymble(aaa)
+    # aaa={'unicode':'⭐','info中文名':'星星','info输入串':'xingxing'}
+    # a_emojiList.addsymble(aaa)
 
-    bbb={'unicode':'🌹','info中文名':'玫瑰','info输入串':'meigui'}
-    a_emojiList.addsymble(bbb)
+    # bbb={'unicode':'🌹','info中文名':'玫瑰','info输入串':'meigui'}
+    # a_emojiList.addsymble(bbb)
 
     ccc={'unicode':'😄','info输入串':'xiaolian','info中文名':'笑脸'}
     a_emojiList.addsymble(ccc)
@@ -110,4 +109,3 @@ if __name__=="__main__":
     a_emojiList.SavetoJson(r'..\temp\myjson.json')
 
     a_emojiList.savetoSougou(r'..\temp\sougou.txt',Default_Position=2)
-

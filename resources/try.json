@@ -1,0 +1,26 @@
+[ {
+  "unicode" : "😄",
+  "aliases" : [ "smile" ],
+  "tags" : [ "happy", "joy", "pleased" ],
+  "supports_fitzpatrick" : false
+}, {
+  "unicode" : "👹",
+  "aliases" : [ "japanese_ogre" ],
+  "tags" : [ "monster" ],
+  "supports_fitzpatrick" : false
+},  {
+  "unicode" : "🌱",
+  "aliases" : [ "seedling" ],
+  "tags" : [ "plant" ],
+  "supports_fitzpatrick" : false
+},  {
+  "unicode" : "📝",
+  "aliases" : [ "memo", "pencil" ],
+  "tags" : [ "document", "note" ],
+  "supports_fitzpatrick" : false
+}, {
+  "unicode" : "👩‍⚖️",
+  "aliases" : [ "woman_judge", "female_judge" ],
+  "tags" : [ ],
+  "supports_fitzpatrick" : false
+} ]
