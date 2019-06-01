@@ -93,11 +93,11 @@ if __name__=="__main__":
     print("Load data from JSON file") 
 
 
-    # aaa={'unicode':'⭐','info中文名':'星星','info输入串':'xingxing'}
-    # a_emojiList.addsymble(aaa)
+    aaa={'unicode':'⭐','info中文名':'星星','info输入串':'xingxing'}
+    a_emojiList.addsymble(aaa)
 
-    # bbb={'unicode':'🌹','info中文名':'玫瑰','info输入串':'meigui'}
-    # a_emojiList.addsymble(bbb)
+    bbb={'unicode':'🌹','info中文名':'玫瑰','info输入串':'meigui'}
+    a_emojiList.addsymble(bbb)
 
     ccc={'unicode':'😄','info输入串':'xiaolian','info中文名':'笑脸'}
     a_emojiList.addsymble(ccc)
